@@ -42,7 +42,7 @@ export const GlobalStyle = createGlobalStyle`
         font-weight: 400;
     } 
 
-    h1, h2, h3, h4, h5, h6, strong {
+    h1, h2, h3, h4, h5, h6, strong, button {
         font-family: 'Poppins', sans-serif;
         font-weight: 600;
     }
@@ -54,6 +54,28 @@ export const GlobalStyle = createGlobalStyle`
     [disabled] {
         opacity: .6;
         cursor: not-allowed;
+    }
+
+    .React-Modal-Overlay{
+        background: rgba(0,0,0,0.5);
+        position: fixed;
+        top: 0;
+        right: 0;
+        left: 0;
+        bottom: 0;
+
+        display: flex;
+        align-items: center;
+        justify-content: center;
+    }
+
+    .React-Modal{
+        width: 100%;
+        max-width: 576px;
+        background-color: var(--background);
+        padding: 3rem;
+        position: relative;
+        border-radius: 0.4rem;
     }
 
 `;
