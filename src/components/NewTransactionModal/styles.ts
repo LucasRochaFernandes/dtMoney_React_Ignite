@@ -1,4 +1,5 @@
 import styled from "styled-components";
+import { darken, rgb } from "polished";
 
 export const Container = styled.form`
   display: flex;
@@ -6,6 +7,7 @@ export const Container = styled.form`
   justify-content: center;
 
   h1 {
+    font-size: 1.5rem;
     margin-bottom: 1rem;
   }
 
@@ -30,9 +32,12 @@ export const Container = styled.form`
     display: grid;
     grid-template-columns: 1fr 1fr;
     gap: 0.5rem;
+    /* margin: 1rem 0; */
+    button {
+    }
   }
 
-  button {
+  button[type="submit"] {
     margin-top: 0.5rem;
     margin-left: auto;
     margin-right: auto;
@@ -46,5 +51,40 @@ export const Container = styled.form`
     width: 50%;
     display: flex;
     justify-content: center;
+
+    transition: filter 0.2s;
+
+    :hover {
+      filter: brightness(0.9);
+    }
+  }
+`;
+
+interface RadioBoxProps {
+  isActive: boolean;
+}
+
+export const RadioBox = styled.button<RadioBoxProps>`
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  height: 4rem;
+  border-radius: 0.25rem;
+  border: 0.06rem solid #d7d7d7;
+
+  span {
+    font-family: "Poppins", sans-serif;
+    font-weight: 400;
+    font-size: 1rem;
+  }
+
+  background: ${(props) => (props.isActive ? "#CCCCCC" : "transparent")};
+
+  gap: 1rem;
+
+  transition: border-color 0.2s;
+
+  :hover {
+    border-color: ${darken(0.2, "#d7d7d7")};
   }
 `;
