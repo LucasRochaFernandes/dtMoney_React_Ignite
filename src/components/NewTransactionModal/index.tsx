@@ -11,6 +11,15 @@ interface INewTransactionModalProps {
   onRequestClose: () => void;
 }
 
+interface ICreateTransactionDTO {
+  id: string;
+  title: string;
+  category: string;
+  amount: number;
+  type: "withdraw" | "deposit" | "";
+  created_at: Date;
+}
+
 export function NewTransactionModal({
   isOpen,
   onRequestClose,
@@ -18,20 +27,26 @@ export function NewTransactionModal({
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [value, setValue] = useState(0);
+  const [id, setId] = useState(3);
 
-  const [type, setType] = useState("");
+  const [type, setType] = useState<"withdraw" | "deposit" | "">("");
 
   function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
 
-    const data = {
+    const data: ICreateTransactionDTO = {
       title,
+      created_at: new Date(),
       category,
-      value,
+      amount: value,
       type,
+      id: String(id),
     };
+    setId(id + 1);
 
-    api.post("/transactions", data);
+    api.post("transactions", data).then(() => {
+      window.alert("Transaction create");
+    });
   }
 
   return (
