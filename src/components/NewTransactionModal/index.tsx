@@ -11,15 +11,14 @@ interface INewTransactionModalProps {
   onRequestClose: () => void;
 }
 
-interface ICreateTransactionDTO {
+interface ITransactions {
   id: string;
   title: string;
-  category: string;
   amount: number;
-  type: "withdraw" | "deposit" | "";
+  category: string;
+  type: "deposit" | "withdraw" | "";
   created_at: Date;
 }
-
 export function NewTransactionModal({
   isOpen,
   onRequestClose,
@@ -34,7 +33,7 @@ export function NewTransactionModal({
   function handleCreateNewTransaction(event: FormEvent) {
     event.preventDefault();
 
-    const data: ICreateTransactionDTO = {
+    const data: ITransactions = {
       title,
       created_at: new Date(),
       category,
