@@ -1,8 +1,7 @@
 import Modal from "react-modal";
 import { Container, RadioBox } from "./styles";
-import { FormEvent, useState, useContext } from "react";
-import { api } from "../../services/api";
-import { TransactionsContext } from "../../TransactionsContext";
+import { FormEvent, useState } from "react";
+import { useTransactions } from "../../hooks/useTransactions";
 
 import outcomeImg from "../../assets/Saídas.svg";
 import closeImg from "../../assets/Close.svg";
@@ -17,13 +16,12 @@ export function NewTransactionModal({
   isOpen,
   onRequestClose,
 }: INewTransactionModalProps) {
-
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [value, setValue] = useState(0);
   const [type, setType] = useState<"withdraw" | "deposit" | "">("");
 
-  const { createTransaction } = useContext(TransactionsContext);
+  const { createTransaction } = useTransactions();
 
   async function handleCreateNewTransaction(event: FormEvent): Promise<void> {
     event.preventDefault();
