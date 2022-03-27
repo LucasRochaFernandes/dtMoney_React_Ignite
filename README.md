@@ -10,7 +10,7 @@ Project created to study basic concepts of react. A finance app that records tra
 
 <span>Access the folder</span>
 
-`cd DT-MONEY`
+`cd dtMoney_React_Ignite`
 
 <span>To install the dependencies</span>
 
