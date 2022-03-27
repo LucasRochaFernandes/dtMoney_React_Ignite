@@ -13,14 +13,6 @@ interface INewTransactionModalProps {
   onRequestClose: () => void;
 }
 
-interface ITransactions {
-  id: string;
-  title: string;
-  amount: number;
-  category: string;
-  type: "deposit" | "withdraw" | "";
-  created_at: Date;
-}
 export function NewTransactionModal({
   isOpen,
   onRequestClose,
@@ -31,20 +23,31 @@ export function NewTransactionModal({
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [value, setValue] = useState(0);
-  const [id, setId] = useState(3);
   const [type, setType] = useState<"withdraw" | "deposit" | "">("");
 
   const { createTransaction } = useContext(TransactionsContext);
 
-  function handleCreateNewTransaction(event: FormEvent) {
-    event.preventDefault(); // tira do funcionamento normal do event submit
+  async function handleCreateNewTransaction(event: FormEvent): Promise<void> {
+    event.preventDefault();
 
-    createTransaction({
+    if (type === "") {
+      window.alert("Defina o tipo da transação");
+      return;
+    }
+
+    await createTransaction({
       title,
       amount: value,
       category,
       type,
     });
+
+    setTitle("");
+    setCategory("");
+    setType("");
+    setValue(0);
+
+    onRequestClose();
   }
 
   return (
