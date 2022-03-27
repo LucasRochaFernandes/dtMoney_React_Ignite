@@ -17,8 +17,6 @@ export function NewTransactionModal({
   isOpen,
   onRequestClose,
 }: INewTransactionModalProps) {
-  const transactions = useContext(TransactionsContext);
-  console.log(transactions);
 
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");

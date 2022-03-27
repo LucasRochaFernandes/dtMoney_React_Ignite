@@ -39,6 +39,7 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
   ): Promise<void> {
     const response = await api.post("transactions", transaction);
     setTransactions([...transactions, response.data.transactions]);
+    console.log(transactions);
   }
 
   return (
