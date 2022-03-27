@@ -1,10 +1,12 @@
 import Modal from "react-modal";
 import { Container, RadioBox } from "./styles";
-import incomeImg from "../../assets/Entradas.svg";
+import { FormEvent, useState, useContext } from "react";
+import { api } from "../../services/api";
+import { TransactionsContext } from "../../TransactionsContext";
+
 import outcomeImg from "../../assets/Saídas.svg";
 import closeImg from "../../assets/Close.svg";
-import { FormEvent, useState } from "react";
-import { api } from "../../services/api";
+import incomeImg from "../../assets/Entradas.svg";
 
 interface INewTransactionModalProps {
   isOpen: boolean;
@@ -23,28 +25,25 @@ export function NewTransactionModal({
   isOpen,
   onRequestClose,
 }: INewTransactionModalProps) {
+  const transactions = useContext(TransactionsContext);
+  console.log(transactions);
+
   const [title, setTitle] = useState("");
   const [category, setCategory] = useState("");
   const [value, setValue] = useState(0);
   const [id, setId] = useState(3);
-
   const [type, setType] = useState<"withdraw" | "deposit" | "">("");
 
+  const { createTransaction } = useContext(TransactionsContext);
+
   function handleCreateNewTransaction(event: FormEvent) {
-    event.preventDefault();
+    event.preventDefault(); // tira do funcionamento normal do event submit
 
-    const data: ITransactions = {
+    createTransaction({
       title,
-      created_at: new Date(),
-      category,
       amount: value,
+      category,
       type,
-      id: String(id),
-    };
-    setId(id + 1);
-
-    api.post("transactions", data).then(() => {
-      window.alert("Transaction create");
     });
   }
 

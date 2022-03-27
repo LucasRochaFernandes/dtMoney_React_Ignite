@@ -6,15 +6,24 @@ interface ITransactions {
   title: string;
   amount: number;
   category: string;
-  type: "deposit" | "withdraw";
+  type: "deposit" | "withdraw" | "";
   created_at: Date;
 }
+
+type TransactionsInputType = Omit<ITransactions, "id" | "created_at">;
 
 interface TransactionsProviderProps {
   children: ReactNode;
 }
 
-export const TransactionsContext = createContext<ITransactions[]>([]);
+interface TransactionsContextData {
+  transactions: ITransactions[];
+  createTransaction: (transaction: TransactionsInputType) => Promise<void>;
+}
+
+export const TransactionsContext = createContext<TransactionsContextData>(
+  {} as TransactionsContextData
+);
 
 export function TransactionsProvider({ children }: TransactionsProviderProps) {
   const [transactions, setTransactions] = useState<ITransactions[]>([]);
@@ -25,8 +34,12 @@ export function TransactionsProvider({ children }: TransactionsProviderProps) {
       .then((res) => setTransactions(res.data.transactions));
   }, []);
 
+  async function createTransaction(transaction: TransactionsInputType) {
+    await api.post("transactions", transaction);
+  }
+
   return (
-    <TransactionsContext.Provider value={transactions}>
+    <TransactionsContext.Provider value={{ transactions, createTransaction }}>
       {children}
     </TransactionsContext.Provider>
   );
